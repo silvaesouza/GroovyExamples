@@ -1,38 +1,62 @@
-package br.com.silvaesouza.main
+#!comment different shebang line
+package br.com.silvaesouza.groovyexamples.main
 
+import br.com.silvaesouza.groovyexamples.array.WorkWithArray
+import br.com.silvaesouza.groovyexamples.constructor.ConstructorExample
+import br.com.silvaesouza.test.AnyMethodExecutor
+import br.com.silvaesouza.test.Task
+import groovy.swing.SwingBuilder;
+import static javax.swing.JFrame.EXIT_ON_CLOSE
+
+/**
+ * @author Adriano P. S. Souza
+ * 
+ */
 class Hello {
 	
-	def reverseStringAndAddLars(String s){
-		(s.reverse()<<"Lars").toString()
-	 }
-	  
+	enum EXAMPLE {
+		ARRAY,
+		CONSTRUCTOR
+	}
+	
+	final static def ESCOLHA = EXAMPLE.CONSTRUCTOR;
+	
+	
 
 	static void main(def args){
-		int escolha = 15;
+		
+		def readln = javax.swing.JOptionPane.&showInputDialog
+		def username = readln 'What is your name?'
+		println "Hello $username."
+		
+		if (ESCOLHA == EXAMPLE.ARRAY)
+			WorkWithArray.example1()
+		else if (ESCOLHA == EXAMPLE.CONSTRUCTOR) {
+			def exampleConstructor1 = new ConstructorExample(firstParameter: "oi", wharever: 123)
+			def exampleConstructor2 = new ConstructorExample()
+			println(exampleConstructor1.toString())
+			println(exampleConstructor2.toString())
 
-		if (escolha == 1)
-			arrays()
-		else if (escolha == 2)
-			defaultNum()
-		else if (escolha == 3)
+			exampleConstructor2.exampleDefaultParameter()
+		} else if (ESCOLHA == 3)
 			loopAndRange()
-		else if (escolha == 4)
+		else if (ESCOLHA == 4)
 			stringAndGString()
-		else if (escolha == 5)
+		else if (ESCOLHA == 5)
 			listToArray()
-		else if (escolha == 6)
+		else if (ESCOLHA == 6)
 			println lengthAllWords(["Oi, Tudo", "Bem?...", "Não sei"])
-		else if (escolha == 7)
+		else if (ESCOLHA == 7)
 			searchList()
-		else if (escolha == 8)
+		else if (ESCOLHA == 8)
 			workWithMap()
-		else if (escolha == 9)
+		else if (ESCOLHA == 9)
 			eachAnyEvery()
-		else if (escolha == 10)
+		else if (ESCOLHA == 10)
 			listToMap()
-		else if (escolha == 11)
+		else if (ESCOLHA == 11)
 			groovyTruth()
-		else if (escolha == 12) {
+		else if (ESCOLHA == 12) {
 			println 'Object equals' == testingSwitch(51)
 			println 'Pattern match' == testingSwitch("Regular pattern matching")
 			println 'Range contains' == testingSwitch(13)
@@ -40,46 +64,66 @@ class Hello {
 			println 'Closure boolean' == testingSwitch(9)
 			println 'Class isInstance' == testingSwitch('This is an instance of String')
 			println 'Default' == testingSwitch(200)
-		} else if (escolha == 13)
+		} else if (ESCOLHA == 13)
 			iterativeWithNumber()
-		else if (escolha == 14)
-			testeAll()	
-		else if (escolha == 15)
+		else if (ESCOLHA == 14)
+			testeAll()
+		else if (ESCOLHA == 15)
 			testeJSon()
-	
+
 		//String.metaClass.reverseStringAndAddLars = { -> reverseStringAndAddLars(delegate) }
 		//println 'Hamburg'.reverseStringAndAddLars()
-		
+			
+		SwingBuilder.build {
+			frame( title: "Swing Sample", pack: true, show: true,
+			defaultCloseOperation: EXIT_ON_CLOSE, locationRelativeTo: null ) {
+				gridLayout( cols: 1, rows: 4 )
+				textField( id: "textField", columns: 20 )
+				label( id: "label" )
+				
+				button( id: "button1", label: "Update", actionPerformed: { evt ->
+					label.text = textField.text
+				})
+				
+				button( "Exemplo Array", actionPerformed: { evt ->
+					WorkWithArray.example1()
+				})
+			}
+		}
+
 	}
-	
-	
-	
+
+	def reverseStringAndAddLars(String s){
+		(s.reverse()<<"Lars").toString()
+	}
+
+
 	static testeJSon() {
 		def t = new Task("Mop","Learn all about Mop");
 		println t.toJson()
 	}
-	
+
 	static testeAll() {
 		def test = new AnyMethodExecutor ();
-		
+
 		// you can call any method you like
 		// on this class
 		println "This method is just fake" == test.hall();
 		println "This method is just fake" == test.Hallo();
 		println "Still a fake method but 'hello' back to you." == test.helloMethod();
-		
+
 		test.hello()
-		
+
 		// setting is basically ignored
 		test.test= 5;
 		test.superDuperCool= 100
-		
+
 		// all properties return 5
 		println test.superDuperCool == 5
 		println test.value == 5;
-		
+
 	}
-	
+
 	static iterativeWithNumber() {
 		5.times {println "Times + $it "}
 		1.upto(3) {println "Up + $it "}
@@ -90,7 +134,7 @@ class Hello {
 		println sum
 		(1..6).each {print "Range $it | "}
 	}
-	
+
 	static testingSwitch(input) {
 		def result
 		switch (input) {
@@ -118,11 +162,11 @@ class Hello {
 		}
 		result
 	}
-	
+
 	static groovyTruth() {
 		def map = [:]
 		assert !map
-		
+
 		def list = ["Ubuntu", "Android"]
 		if (list) println true else println false
 		println !0
@@ -133,23 +177,23 @@ class Hello {
 		def test = null
 		println !test
 	}
-	
+
 	static listToMap() {
 		def words = ['Ubuntu', 'Android', 'Mac OS X', 'Windows']
-		
+
 		// simple conversion
 		def result = words.collectEntries {
-		  [(it):0]
+			[(it):0]
 		}
-		
+
 		println result.size() == 4
 		println result.Ubuntu == 0
-		
+
 		// now calculate value with a closure, true if word contains "n"
 		def map = words.collectEntries {
-		  [(it): it.contains('n')]
+			[(it): it.contains('n')]
 		}
-		
+
 		println map
 		println map.Ubuntu && map.Windows && map.Android && !map.'Mac OS X'
 	}
@@ -200,25 +244,25 @@ class Hello {
 	static int lengthAllWords(def list) {
 		// calculate the length of every String in the list
 		def sizeList = list*.size()
-		
+
 		list.sort({s1, s2 -> s1.size() <=> s2.size()});
-		
+
 		int sizeAll = 0
-		
+
 		/*
-		list.each{word->
-			def tam = word.size()
-			sizeAll += tam
-			println word + "|" + tam
-		}
-		*/
-		
+		 list.each{word->
+		 def tam = word.size()
+		 sizeAll += tam
+		 println word + "|" + tam
+		 }
+		 */
+
 		//list.each({line -> println line})
 		list.each({
 			def tam = it.size()
 			sizeAll += tam
 			println "${it} | $tam"})
-	  
+
 		return sizeAll
 	}
 
@@ -249,34 +293,29 @@ class Hello {
 		println "We met at $date"
 		println "We met at ${date.format('MM/dd/yy')}"
 	}
-	
+
 	static eachAnyEvery() {
 		def mymap = [1:"Jim Knopf", 2:"Thomas Edison", 3:"Lars Vogel"]
 		mymap.each {entry -> println (entry.key > 1)}
 		mymap.each {entry -> println (entry.value.contains("o"))}
 		println "Lars contained:" + mymap.any {entry -> entry.value.contains("Lars")}
 		println "Every key small than 4:" + mymap.every {entry -> entry.key < 4}
-	
+
 		def result =''
 		for (key in mymap.keySet()) {
-		  result += key
+			result += key
 		}
 		println result
-	
-		mymap.each { key, value ->
-		  print key + " "
-		  println value
-		}
-	
-		mymap.each { entry ->
-		  print entry.key + " "
-		  println entry.value
-		}
-	}
 
-	static arrays() {
-		def mylist= [1, 2, "Lars", "4"]
-		mylist.each{ println it }
+		mymap.each { key, value ->
+			print key + " "
+			println value
+		}
+
+		mymap.each { entry ->
+			print entry.key + " "
+			println entry.value
+		}
 	}
 
 	static loopAndRange() {
@@ -286,12 +325,4 @@ class Hello {
 		println 'B'..'E' == ['B', 'C', 'D', 'E']
 	}
 
-	static defaultNum() {
-		println sum(1,5)
-		println sum(1,2,5)
-	}
-
-	static sum(a,b,c=0){
-		a+b+c;
-	}
 }

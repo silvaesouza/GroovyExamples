@@ -1,4 +1,4 @@
-package br.com.silvaesouza.main
+package br.com.silvaesouza.test
 
 import groovy.xml.MarkupBuilder
 

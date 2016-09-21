@@ -1,5 +1,9 @@
 package br.com.silvaesouza.main;
 
+import br.com.silvaesouza.groovyexamples.array.WorkWithArray;
+import br.com.silvaesouza.groovyexamples.main.Hello;
+import br.com.silvaesouza.test.Person;
+
 public class MainTest {
 	
 	public static void main(String[] args) {
@@ -9,7 +13,7 @@ public class MainTest {
 	    p.setLastName("Vogel");
 	    System.out.println(p.getFirstName() + " " + p.getLastName());
 	    
-	    Hello.arrays();
+	    WorkWithArray.example1();
 	    Hello.testeJSon();
 		
 	}
