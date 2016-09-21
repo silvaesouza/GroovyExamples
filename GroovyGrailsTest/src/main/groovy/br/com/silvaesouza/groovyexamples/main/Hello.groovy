@@ -1,12 +1,15 @@
 #!comment different shebang line
 package br.com.silvaesouza.groovyexamples.main
 
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import br.com.silvaesouza.groovyexamples.array.WorkWithArray
 import br.com.silvaesouza.groovyexamples.constructor.ConstructorExample
 import br.com.silvaesouza.test.AnyMethodExecutor
 import br.com.silvaesouza.test.Task
-import groovy.swing.SwingBuilder;
-import static javax.swing.JFrame.EXIT_ON_CLOSE
+import groovy.swing.SwingBuilder
+
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 
 /**
  * @author Adriano P. S. Souza
@@ -14,20 +17,74 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE
  */
 class Hello {
 	
-	enum EXAMPLE {
+	static enum EXAMPLE {
 		ARRAY,
 		CONSTRUCTOR
 	}
 	
 	final static def ESCOLHA = EXAMPLE.CONSTRUCTOR;
 	
-	
-
 	static void main(def args){
 		
+		/*
 		def readln = javax.swing.JOptionPane.&showInputDialog
 		def username = readln 'What is your name?'
 		println "Hello $username."
+		*/
+		
+		def swing = new SwingBuilder()
+		swing.edt {
+			locationRelativeTo: null
+			lookAndFeel 'system' /* 'nimbus' */
+			f = frame( title: "Swing Sample", show: true,
+			defaultCloseOperation: EXIT_ON_CLOSE, size: [600, 300] ) {
+				Point cp = GraphicsEnvironment.localGraphicsEnvironment.centerPoint
+				current.location = new Point((int)(cp.x -current.width/2), (int)(cp.y - current.height/2))
+			
+				gridLayout( cols: 1, rows: 6 )
+				textField( id: "textField", columns: 20 )
+				label( id: "label" )
+				button( id: "button1", label: "Update", actionPerformed: { evt ->
+					label.text = textField.text
+				})
+				buttonGroup(id: 'classGroup').with {
+					radioButton text:"array",
+								buttonGroup: it, 
+								actionPerformed:{e->
+									WorkWithArray.example1()}
+					radioButton text:"consctructor", 
+					            buttonGroup: it, 
+								actionPerformed:{
+									def exampleConstructor1 = new ConstructorExample(firstParameter: "oi", wharever: 123)
+									def exampleConstructor2 = new ConstructorExample()
+									println(exampleConstructor1.toString())
+									println(exampleConstructor2.toString())
+						
+									exampleConstructor2.exampleDefaultParameter()
+								}
+				}
+				
+				// Outra forma de criar buttonGroup
+				/*
+					myGroup = buttonGroup();
+					radioButton(id:"array", label: "Array", buttonGroup:myGroup, selected: true)
+					radioButton(id:"constructor", label: "Constructor", buttonGroup:myGroup)
+					button( "Exemplo Array", 
+					        actionPerformed: { evt ->
+								println(myGroup)
+								WorkWithArray.example1()
+						 	})
+				*/
+			}
+			
+			//Point cp = GraphicsEnvironment.localGraphicsEnvironment.centerPoint
+			//f.location = new Point((int)(cp.x - f.width), (int) (cp.y - f.height))
+			
+			
+			//win.getContentPane().setPreferredSize(new Dimension(400,150))
+			//f.pack()
+			//f.show()
+		}
 		
 		if (ESCOLHA == EXAMPLE.ARRAY)
 			WorkWithArray.example1()
@@ -74,23 +131,6 @@ class Hello {
 		//String.metaClass.reverseStringAndAddLars = { -> reverseStringAndAddLars(delegate) }
 		//println 'Hamburg'.reverseStringAndAddLars()
 			
-		SwingBuilder.build {
-			frame( title: "Swing Sample", pack: true, show: true,
-			defaultCloseOperation: EXIT_ON_CLOSE, locationRelativeTo: null ) {
-				gridLayout( cols: 1, rows: 4 )
-				textField( id: "textField", columns: 20 )
-				label( id: "label" )
-				
-				button( id: "button1", label: "Update", actionPerformed: { evt ->
-					label.text = textField.text
-				})
-				
-				button( "Exemplo Array", actionPerformed: { evt ->
-					WorkWithArray.example1()
-				})
-			}
-		}
-
 	}
 
 	def reverseStringAndAddLars(String s){
