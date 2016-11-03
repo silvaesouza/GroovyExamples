@@ -34,7 +34,6 @@ class Hello {
 		
 		def swing = new SwingBuilder()
 		swing.edt {
-			locationRelativeTo: null
 			lookAndFeel 'system' /* 'nimbus' */
 			f = frame( title: "Swing Sample", show: true,
 			defaultCloseOperation: EXIT_ON_CLOSE, size: [600, 300] ) {
@@ -77,13 +76,6 @@ class Hello {
 				*/
 			}
 			
-			//Point cp = GraphicsEnvironment.localGraphicsEnvironment.centerPoint
-			//f.location = new Point((int)(cp.x - f.width), (int) (cp.y - f.height))
-			
-			
-			//win.getContentPane().setPreferredSize(new Dimension(400,150))
-			//f.pack()
-			//f.show()
 		}
 		
 		if (ESCOLHA == EXAMPLE.ARRAY)
