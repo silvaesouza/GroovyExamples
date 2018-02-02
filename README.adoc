@@ -8,4 +8,4 @@
 ├── sigres | Plugin Sigres
 └── legado | Códigos dos processos lobato
 ```
-include::README_VB.adoc[]
+include::README_VB.adoc[Anotações sobre o código VB]
