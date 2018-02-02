@@ -1,0 +1,24 @@
+Comportamento VB
+
+    - Function está com comportamento estranho ao atribuir valores por parâmetros (no caso do VB é global), mesmo
+usando ByRef
+
+    - Sub:
+    Está funcionando de acordo
+
+
+    Engraçado é que quando se usa Call no sub ou Function, temos o comportamento esperado.
+
+
+Private Sub mulekeZica_Click()
+    Dim nome As String
+    Dim nomeReferencia As String
+    nome = "nome"
+    nomeReferencia = nome
+    Call c(nome)
+    Debug.Print nome & ">>>>" & nomeReferencia
+
+End Sub
+Public Sub c(ByRef nome As String)
+    nome = "nomeAlterado"
+End Sub

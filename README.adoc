@@ -1,0 +1,11 @@
+=== SIGITM-ALARMES
+
+```
+├── api    | Aplicação main que junta os demais plugins
+├── db     | Scripts Sql
+├── eoc    | Plugin EOC
+├── gisdh  | Plugin GiSdh
+├── sigres | Plugin Sigres
+└── legado | Códigos dos processos lobato
+```
+include::README_VB.adoc[]
