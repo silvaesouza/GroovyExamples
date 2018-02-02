@@ -9,10 +9,10 @@
 └── legado | Códigos dos processos lobato
 ```
 ifdef::safe-mode-secure[]
-link:README_VB.adoc[VB TESTE]
+link:README_VB.adoc[Comportamento VB]
 endif::safe-mode-secure[]
 ifndef::safe-mode-secure[]
-include::README_VB.adoc
+include::README_VB.adoc[]
 endif::safe-mode-secure[]
 
 //include::README_VB.adoc[leveloffset=+1]
